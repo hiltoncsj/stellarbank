@@ -3,6 +3,7 @@ import { createRoot } from 'react-dom/client';
 import App from './App.tsx';
 import AdminApp from './admin/AdminApp.tsx';
 import './index.css';
+import './dolarpix.css';
 
 const isAdmin = window.location.pathname.startsWith('/admin');
 

@@ -1,8 +1,23 @@
 {
   "name": "dolarpix",
-  "private": true,
   "version": "0.1.0",
+  "private": true,
+  "description": "Carteira digital para envio e recebimento de stablecoins (USDC/USDT) na rede **Stellar**. Interface mobile-first com autenticação JWT, banco de dados local e integração com IA via Gemini.",
+  "homepage": "https://github.com/hiltoncsj/stellarbank#readme",
+  "bugs": {
+    "url": "https://github.com/hiltoncsj/stellarbank/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/hiltoncsj/stellarbank.git"
+  },
+  "license": "ISC",
+  "author": "",
   "type": "module",
+  "main": "index.js",
+  "directories": {
+    "lib": "lib"
+  },
   "scripts": {
     "dev": "vite --port=3000 --host=0.0.0.0",
     "dev:server": "tsx watch server/index.ts",

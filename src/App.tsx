@@ -13,8 +13,7 @@ import Receive from './components/Receive';
 import Assets from './components/Assets';
 import Profile from './components/Profile';
 import AIChat from './components/AIChat';
-import Login from './components/Login';
-import Signup from './components/Signup';
+import Landing from './Landing';
 import Deposit from './components/Deposit';
 import { AnimatePresence, motion } from 'motion/react';
 import { toast } from 'sonner';
@@ -44,7 +43,6 @@ async function fetchTransactions(token: string): Promise<Transaction[]> {
 export default function App() {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [currentView, setCurrentView] = useState<View>('home');
-  const [authView, setAuthView] = useState<'login' | 'signup'>('login');
   const [user, setUser] = useState<User>(EMPTY_USER);
   const [transactions, setTransactions] = useState<Transaction[]>([]);
   const [xlmUsd, setXlmUsd] = useState(0);
@@ -86,35 +84,10 @@ export default function App() {
     }
   };
 
-  const handleSignup = async (name: string, email: string, phone: string, password: string, currency: string) => {
-    try {
-      const res = await fetch('/api/auth/register', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ name, email, phone, password, currency }),
-      });
-
-      const data = await res.json();
-
-      if (res.ok) {
-        localStorage.setItem('token', data.token);
-        setUser(data.user);
-        setTransactions([]);
-        setIsAuthenticated(true);
-        toast.success('Conta criada com sucesso!');
-      } else {
-        toast.error(data.error || 'Erro ao criar conta');
-      }
-    } catch {
-      toast.error('Servidor indisponivel. Verifique sua conexao.');
-    }
-  };
-
   const handleLogout = () => {
     localStorage.removeItem('token');
     setIsAuthenticated(false);
     setCurrentView('home');
-    setAuthView('login');
     setUser(EMPTY_USER);
     setTransactions([]);
   };
@@ -141,27 +114,24 @@ export default function App() {
     setUser((prev) => ({ ...prev, balance: prev.balance - usdAmount }));
   };
 
+  // ✅ LANDING COMO PRIMEIRA TELA
   if (!isAuthenticated) {
     return (
-      <div className="max-w-md mx-auto h-screen bg-[#0c0f1a] text-white shadow-2xl relative overflow-hidden">
+      <>
         <AnimatePresence mode="wait">
           <motion.div
-            key={authView}
-            initial={{ opacity: 0, x: authView === 'signup' ? 40 : -40 }}
-            animate={{ opacity: 1, x: 0 }}
+            key="landing"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            transition={{ duration: 0.25 }}
-            className="h-full"
+            transition={{ duration: 0.3 }}
           >
-            {authView === 'login' ? (
-              <Login onLogin={handleLogin} onGoToSignup={() => setAuthView('signup')} />
-            ) : (
-              <Signup onSignup={handleSignup} onGoToLogin={() => setAuthView('login')} />
-            )}
+            <Landing onLogin={handleLogin} />
           </motion.div>
         </AnimatePresence>
+
         <Toaster position="top-center" richColors />
-      </div>
+      </>
     );
   }
 
