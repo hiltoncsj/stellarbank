@@ -1,4 +1,4 @@
-import { Zap } from "lucide-react";
+import { Zap, Wallet } from "lucide-react";
 
 export default function Navbar({ modoMonitor, setModoMonitor }: any) {
   return (
@@ -18,7 +18,7 @@ export default function Navbar({ modoMonitor, setModoMonitor }: any) {
             className="btn-glow px-5 py-2 text-xs font-bold uppercase tracking-widest"
             id="login-button"
           >
-            {modoMonitor ? "LOGIN" : "CONECTAR"}
+            <Wallet className="w-4 h-4" /> {modoMonitor ? "LOGIN" : "CONECTAR"}
           </button>
         </div>
       </div>

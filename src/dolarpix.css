@@ -149,6 +149,8 @@ body {
 }
 
 #login-button {
+    display: inline-flex;
+    gap: 10px;
     color: #00f2fe;
     font-weight: bold;
     text-decoration: uppercase;

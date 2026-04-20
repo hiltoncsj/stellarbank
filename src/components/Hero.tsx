@@ -137,7 +137,7 @@ export default function Hero({ onLogin, modoMonitor, onGoToSignup }: Props) {
         {/* LEFT */}
         <div>
 
-          <div className="mb-6 inline-flex items-center gap-2 px-4 py-1 rounded-full border border-cyan-400/30 text-[10px] uppercase text-cyan-300">
+          <div className="mb-6 inline-flex items-center gap-2 px-5 py-1 rounded-full border border-cyan-400 text-[14px] uppercase text-cyan-300">
             <div className="w-2 h-2 bg-cyan-400 rounded-full animate-pulse" />
             Bem-vindo de volta
           </div>
@@ -149,7 +149,7 @@ export default function Hero({ onLogin, modoMonitor, onGoToSignup }: Props) {
             </span>
           </h1>
 
-          <p className="text-white/80 mb-8 max-w-xl">
+          <p className="text-white mb-8 max-w-xl">
             {modoMonitor ? (
               <>
                 Adicione a <span className="text-[#00f2fe]">Public Key</span> para acompanhar histórico, saldo e transações ao redor do globo usando a blockchain da Stellar.
@@ -208,6 +208,12 @@ export default function Hero({ onLogin, modoMonitor, onGoToSignup }: Props) {
                 onChange={(e) => setPublicKey(e.target.value)}
                 className="bg-white/5 px-4 py-3 rounded-xl text-white outline-none"
               />
+              <button
+                onClick={() => onLogin(publicKey, "")}
+                className="cursor-pointer bg-gradient-to-r from-brand-500 to-blue-600 py-3 rounded-full font-bold"
+              >
+                Conectar
+              </button>
             </div>
           )}
         </div>
