@@ -96,6 +96,57 @@ router.get('/transactions', async (_req, res) => {
   })));
 });
 
+router.get('/db/schema', async (_req, res) => {
+  const tables = await db.execute({
+    sql: "SELECT name FROM sqlite_master WHERE type = 'table' AND name NOT LIKE 'sqlite_%' ORDER BY name ASC",
+    args: [],
+  });
+
+  const tableNames = tables.rows.map((row: any) => row.name as string);
+  const schema: Record<string, any[]> = {};
+
+  for (const tableName of tableNames) {
+    const columns = await db.execute({
+      sql: `PRAGMA table_info(${tableName})`,
+      args: [],
+    });
+    schema[tableName] = columns.rows as any[];
+  }
+
+  res.json({ tables: tableNames, schema });
+});
+
+router.post('/db/query', async (req, res) => {
+  const { sql } = req.body;
+
+  if (!sql || typeof sql !== 'string') {
+    res.status(400).json({ error: 'sql e obrigatorio' });
+    return;
+  }
+
+  const trimmed = sql.trim();
+  if (!trimmed) {
+    res.status(400).json({ error: 'sql vazio' });
+    return;
+  }
+
+  if (trimmed.includes(';')) {
+    res.status(400).json({ error: 'Use apenas uma instrucao por vez' });
+    return;
+  }
+
+  try {
+    const result = await db.execute({ sql: trimmed, args: [] });
+    res.json({
+      rows: result.rows || [],
+      rowsAffected: Number(result.rowsAffected || 0),
+      lastInsertRowid: result.lastInsertRowid != null ? Number(result.lastInsertRowid) : null,
+    });
+  } catch (err: any) {
+    res.status(400).json({ error: err.message || 'Falha ao executar SQL' });
+  }
+});
+
 router.post('/credit', async (req, res) => {
   const { userId, amount, asset = 'XLM', onChain = false } = req.body;
 

@@ -3,10 +3,10 @@ import { QRCodeSVG } from 'qrcode.react';
 import { Copy, Share2, Check, Download, Coins } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
-import { Card } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { toast } from 'sonner';
 import { motion } from 'motion/react';
+import { cn } from '@/lib/utils';
 
 interface ReceiveProps {
   user: {
@@ -36,78 +36,91 @@ export default function Receive({ user }: ReceiveProps) {
   const qrValue = `stellar-pix:${user.email}${amount ? `?amount=${amount}` : ''}${selectedCurrency.id !== 'QUALQUER' ? `&currency=${selectedCurrency.id}` : ''}`;
 
   return (
-    <div className="flex flex-col h-full px-4 sm:px-6 pt-8 pb-32 overflow-y-auto no-scrollbar">
+    <div className="flex h-full flex-col overflow-y-auto px-4 pb-12 pt-8 no-scrollbar sm:px-6 md:max-w-2xl md:mx-auto">
       <header className="mb-8">
-        <h1 className="text-2xl font-bold mb-2">Receber</h1>
-        <p className="text-zinc-500 text-sm">Mostre o QR Code ou compartilhe sua Chave ID para receber pagamentos instantÃ¢neos.</p>
+        <h1 className="mb-2 text-2xl font-bold text-white">Receber</h1>
+        <p className="text-sm text-zinc-500">
+          Mostre o QR Code ou compartilhe sua Chave ID para receber pagamentos na hora.
+        </p>
       </header>
 
-      <Card className="p-4 sm:p-6 flex flex-col items-center gap-4 rounded-3xl border-none shadow-xl shadow-zinc-200/50 bg-white overflow-hidden">
-        <div className="w-full flex justify-center">
-          <div className="w-full max-w-[220px] aspect-square p-3 bg-white rounded-2xl border border-zinc-100">
+      <div className="glass flex flex-col items-center gap-4 rounded-3xl border border-white/10 p-4 sm:p-6">
+        <div className="flex w-full justify-center">
+          <div className="aspect-square w-full max-w-[240px] rounded-2xl border border-white/10 bg-white p-3">
             <QRCodeSVG
               value={qrValue}
-              size={220}
+              size={210}
               level="H"
               includeMargin={false}
-              className="w-full h-full"
+              className="h-full w-full"
             />
           </div>
         </div>
 
-        <div className="text-center space-y-1 w-full">
-          <p className="text-xs font-bold text-zinc-400 uppercase tracking-widest">Sua Chave ID</p>
-          <p className="text-sm sm:text-lg font-semibold text-zinc-900 break-all">{user.email}</p>
+        <div className="w-full space-y-1 text-center">
+          <p className="text-xs font-bold uppercase tracking-widest text-zinc-500">Sua Chave ID</p>
+          <p className="break-all text-sm font-semibold text-zinc-100 sm:text-lg">{user.email}</p>
           {selectedCurrency.id !== 'QUALQUER' && (
-            <Badge variant="secondary" className="bg-primary/10 text-primary border-none mt-2">
+            <Badge variant="secondary" className="mt-2 border-none bg-primary/15 text-primary">
               Somente {selectedCurrency.id}
             </Badge>
           )}
         </div>
 
-        <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 w-full">
-          <Button variant="outline" className="w-full h-11 rounded-xl gap-2 text-sm" onClick={handleCopy}>
-            {copied ? <Check size={16} className="text-emerald-600" /> : <Copy size={16} />}
+        <div className="grid w-full grid-cols-1 gap-3 sm:grid-cols-2">
+          <Button
+            variant="outline"
+            className="h-11 gap-2 rounded-xl border-white/15 bg-white/5 text-sm text-zinc-100 hover:bg-white/10"
+            onClick={handleCopy}
+          >
+            {copied ? <Check size={16} className="text-emerald-400" /> : <Copy size={16} />}
             {copied ? 'Copiado' : 'Copiar Chave'}
           </Button>
-          <Button variant="outline" className="w-full h-11 rounded-xl gap-2 text-sm">
+          <Button
+            variant="outline"
+            className="h-11 gap-2 rounded-xl border-white/15 bg-white/5 text-sm text-zinc-100 hover:bg-white/10"
+          >
             <Share2 size={16} />
             Compartilhar
           </Button>
         </div>
-      </Card>
+      </div>
 
       <div className="mt-8 space-y-6">
         <div className="space-y-4">
-          <h2 className="text-sm font-bold text-zinc-400 uppercase tracking-wider">Limitar moeda (opcional)</h2>
-          <div className="flex gap-2 overflow-x-auto no-scrollbar pb-2">
+          <h2 className="text-sm font-bold uppercase tracking-wider text-zinc-500">Limitar moeda (opcional)</h2>
+          <div className="flex gap-2 overflow-x-auto pb-2 no-scrollbar">
             {CURRENCIES.map((curr) => (
               <button
                 key={curr.id}
+                type="button"
                 onClick={() => setSelectedCurrency(curr)}
-                className={`flex items-center gap-2 px-4 py-2 rounded-full border-2 whitespace-nowrap transition-all ${
-                  selectedCurrency.id === curr.id ? 'border-primary bg-primary/5 text-primary' : 'border-zinc-100 bg-white text-zinc-500'
-                }`}
+                className={cn(
+                  'flex shrink-0 items-center gap-2 whitespace-nowrap rounded-full border-2 px-4 py-2 text-xs font-bold transition-all',
+                  selectedCurrency.id === curr.id
+                    ? 'border-primary bg-primary/15 text-primary'
+                    : 'border-white/10 bg-white/5 text-zinc-400 hover:border-white/20 hover:text-zinc-200'
+                )}
               >
                 {curr.icon ? (
-                  <img src={curr.icon} alt={curr.id} className="w-4 h-4 object-contain" referrerPolicy="no-referrer" />
+                  <img src={curr.icon} alt={curr.id} className="h-4 w-4 object-contain" referrerPolicy="no-referrer" />
                 ) : (
                   <Coins size={14} />
                 )}
-                <span className="text-xs font-bold">{curr.name}</span>
+                <span>{curr.name}</span>
               </button>
             ))}
           </div>
         </div>
 
         <div className="space-y-4">
-          <h2 className="text-sm font-bold text-zinc-400 uppercase tracking-wider">Solicitar valor especÃ­fico</h2>
+          <h2 className="text-sm font-bold uppercase tracking-wider text-zinc-500">Solicitar valor específico</h2>
           <div className="relative">
-            <span className="absolute left-4 top-1/2 -translate-y-1/2 font-bold text-zinc-400">$</span>
+            <span className="absolute left-4 top-1/2 -translate-y-1/2 font-bold text-zinc-500">$</span>
             <Input
               type="number"
               placeholder="0.00"
-              className="pl-8 h-14 rounded-2xl bg-white border-zinc-200 focus-visible:ring-primary text-lg font-bold"
+              className="h-14 rounded-2xl border-white/15 bg-white/8 pl-8 text-lg font-bold text-white placeholder:text-zinc-600 focus-visible:ring-primary"
               value={amount}
               onChange={(e) => setAmount(e.target.value)}
             />
@@ -116,7 +129,7 @@ export default function Receive({ user }: ReceiveProps) {
             <motion.p
               initial={{ opacity: 0, y: -10 }}
               animate={{ opacity: 1, y: 0 }}
-              className="text-xs text-zinc-400 font-medium px-1"
+              className="px-1 text-xs font-medium text-zinc-500"
             >
               QR Code atualizado para receber exatamente ${amount}
             </motion.p>
@@ -124,13 +137,13 @@ export default function Receive({ user }: ReceiveProps) {
         </div>
 
         <div className="mt-auto pt-8">
-          <div className="bg-emerald-50 p-4 rounded-2xl flex items-start gap-3">
-            <div className="w-8 h-8 rounded-full bg-emerald-100 text-emerald-600 flex items-center justify-center shrink-0">
+          <div className="flex items-start gap-3 rounded-2xl border border-emerald-500/20 bg-emerald-500/10 p-4">
+            <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-emerald-500/20 text-emerald-300">
               <Download size={18} />
             </div>
             <div className="space-y-1">
-              <p className="text-sm font-bold text-emerald-900">TransferÃªncia GrÃ¡tis</p>
-              <p className="text-xs text-emerald-700/80">VocÃª nÃ£o paga nada para receber. O dinheiro cai na hora na sua conta.</p>
+              <p className="text-sm font-bold text-emerald-200">Recebimento sem taxa oculta</p>
+              <p className="text-xs text-emerald-200/75">Você não paga para receber. O valor é o que aparece para quem paga.</p>
             </div>
           </div>
         </div>

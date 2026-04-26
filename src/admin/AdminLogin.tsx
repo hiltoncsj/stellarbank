@@ -34,7 +34,7 @@ export default function AdminLogin({ onLogin }: AdminLoginProps) {
   };
 
   return (
-    <div className="min-h-screen bg-[#0c0f1a] flex items-center justify-center p-6">
+    <div className="flex min-h-screen items-center justify-center bg-app p-6">
       <div className="w-full max-w-sm">
         <div className="text-center mb-10">
           <div className="w-16 h-16 rounded-2xl flex items-center justify-center mx-auto mb-5"

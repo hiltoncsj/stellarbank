@@ -48,7 +48,7 @@ export default function Deposit({ user, onBack }: DepositProps) {
   };
 
   return (
-    <div className="flex flex-col h-full bg-[#0c0f1a] overflow-y-auto no-scrollbar">
+    <div className="flex h-full flex-col overflow-y-auto bg-app no-scrollbar">
       {/* Header */}
       <header className="px-6 pt-12 pb-4 flex items-center gap-4">
         <button

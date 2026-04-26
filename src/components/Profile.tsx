@@ -112,13 +112,13 @@ export default function Profile({ user, onLogout, onUserUpdate }: ProfileProps) 
   const initials = user.name.split(' ').slice(0, 2).map((n) => n[0]).join('').toUpperCase();
 
   return (
-    <div className="flex flex-col h-full px-6 pt-12 pb-24 overflow-y-auto no-scrollbar">
+    <div className="flex flex-col h-full px-6 pt-12 pb-24 overflow-y-auto no-scrollbar md:max-w-2xl md:mx-auto w-full">
       <div className="flex flex-col items-center mb-8">
         <div className="relative mb-4">
           <Avatar className="w-24 h-24 border-4 border-blue-400/20 shadow-2xl">
             <AvatarFallback className="bg-blue-500/20 text-blue-300 text-2xl font-bold">{initials}</AvatarFallback>
           </Avatar>
-          <div className="absolute bottom-0 right-0 bg-blue-500 text-white p-2 rounded-full border-2 border-[#0c0f1a] shadow-lg">
+          <div className="absolute bottom-0 right-0 rounded-full border-2 border-app bg-indigo-500 p-2 text-white shadow-lg">
             <Settings size={14} />
           </div>
         </div>

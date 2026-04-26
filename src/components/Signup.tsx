@@ -7,6 +7,7 @@ import { Input } from '@/components/ui/input';
 interface SignupProps {
   onSignup: (name: string, email: string, phone: string, password: string, currency: string) => void;
   onGoToLogin: () => void;
+  onBackToLanding: () => void;
 }
 
 const CURRENCIES = [
@@ -16,7 +17,7 @@ const CURRENCIES = [
   { id: 'GBP', label: 'Libra' },
 ];
 
-export default function Signup({ onSignup, onGoToLogin }: SignupProps) {
+export default function Signup({ onSignup, onGoToLogin, onBackToLanding }: SignupProps) {
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [phone, setPhone] = useState('');
@@ -32,11 +33,11 @@ export default function Signup({ onSignup, onGoToLogin }: SignupProps) {
   };
 
   return (
-    <div className="flex flex-col min-h-full px-8 pt-12 pb-10 bg-[#0c0f1a] overflow-y-auto no-scrollbar">
+    <div className="flex min-h-full flex-col overflow-y-auto bg-app px-8 pb-10 pt-12 no-scrollbar">
       <button
-        onClick={onGoToLogin}
-        className="w-10 h-10 rounded-xl flex items-center justify-center mb-8 text-white/60 hover:text-white transition-colors self-start"
-        style={{ background: 'rgba(255,255,255,0.08)', border: '1px solid rgba(255,255,255,0.12)' }}
+        type="button"
+        onClick={onBackToLanding}
+        className="mb-8 flex h-10 w-10 items-center justify-center self-start rounded-xl border border-white/10 bg-white/[0.06] text-zinc-400 transition-colors hover:text-white"
       >
         <ArrowLeft size={20} />
       </button>
@@ -48,7 +49,7 @@ export default function Signup({ onSignup, onGoToLogin }: SignupProps) {
         className="mb-8"
       >
         <h1 className="text-3xl font-bold tracking-tight mb-2 text-white">Criar conta</h1>
-        <p className="text-white/50 text-sm">Comece a usar o DolarPix hoje</p>
+        <p className="text-sm text-white/50">Transacoes rapidas, com a seriedade que voce espera de um banco.</p>
       </motion.div>
 
       <form onSubmit={handleSubmit} className="space-y-4">
@@ -58,7 +59,7 @@ export default function Signup({ onSignup, onGoToLogin }: SignupProps) {
             <User className="absolute left-4 top-1/2 -translate-y-1/2 text-white/40 w-5 h-5" />
             <Input
               placeholder="Seu nome"
-              className="h-14 pl-12 rounded-2xl bg-white/8 border-white/15 text-white placeholder:text-white/30 focus:border-blue-400/60 focus:bg-white/10 transition-all"
+                className="h-14 rounded-2xl border-white/15 bg-white/8 pl-12 text-white placeholder:text-white/30 transition-all focus:border-primary/55 focus:bg-white/10"
               value={name}
               onChange={(e) => setName(e.target.value)}
               required
@@ -73,7 +74,7 @@ export default function Signup({ onSignup, onGoToLogin }: SignupProps) {
             <Input
               type="email"
               placeholder="seu@email.com"
-              className="h-14 pl-12 rounded-2xl bg-white/8 border-white/15 text-white placeholder:text-white/30 focus:border-blue-400/60 focus:bg-white/10 transition-all"
+                className="h-14 rounded-2xl border-white/15 bg-white/8 pl-12 text-white placeholder:text-white/30 transition-all focus:border-primary/55 focus:bg-white/10"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
               required
@@ -87,7 +88,7 @@ export default function Signup({ onSignup, onGoToLogin }: SignupProps) {
             <Phone className="absolute left-4 top-1/2 -translate-y-1/2 text-white/40 w-5 h-5" />
             <Input
               placeholder="+55 11 99999-9999"
-              className="h-14 pl-12 rounded-2xl bg-white/8 border-white/15 text-white placeholder:text-white/30 focus:border-blue-400/60 focus:bg-white/10 transition-all"
+                className="h-14 rounded-2xl border-white/15 bg-white/8 pl-12 text-white placeholder:text-white/30 transition-all focus:border-primary/55 focus:bg-white/10"
               value={phone}
               onChange={(e) => setPhone(e.target.value)}
             />
@@ -101,7 +102,7 @@ export default function Signup({ onSignup, onGoToLogin }: SignupProps) {
             <select
               value={currency}
               onChange={(e) => setCurrency(e.target.value)}
-              className="w-full h-14 pl-12 pr-4 rounded-2xl bg-white/8 border border-white/15 text-white focus:border-blue-400/60 focus:bg-white/10 transition-all outline-none"
+              className="h-14 w-full rounded-2xl border border-white/15 bg-white/8 pl-12 pr-4 text-white outline-none transition-all focus:border-primary/55 focus:bg-white/10"
             >
               {CURRENCIES.map((option) => (
                 <option key={option.id} value={option.id} className="text-zinc-900">
@@ -119,7 +120,7 @@ export default function Signup({ onSignup, onGoToLogin }: SignupProps) {
             <Input
               type="password"
               placeholder="........"
-              className="h-14 pl-12 rounded-2xl bg-white/8 border-white/15 text-white placeholder:text-white/30 focus:border-blue-400/60 focus:bg-white/10 transition-all"
+                className="h-14 rounded-2xl border-white/15 bg-white/8 pl-12 text-white placeholder:text-white/30 transition-all focus:border-primary/55 focus:bg-white/10"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
               required
@@ -129,12 +130,7 @@ export default function Signup({ onSignup, onGoToLogin }: SignupProps) {
         </div>
 
         <div className="pt-2 pb-6">
-          <Button
-            type="submit"
-            disabled={loading}
-            className="w-full h-14 rounded-2xl font-bold text-base shadow-lg shadow-blue-500/20"
-            style={{ background: loading ? 'rgba(59,130,246,0.5)' : '#3b82f6' }}
-          >
+          <Button type="submit" disabled={loading} className="h-14 w-full rounded-2xl text-base font-bold shadow-lg shadow-indigo-500/20 disabled:opacity-60">
             {loading ? 'Criando conta...' : 'Criar conta'}
           </Button>
         </div>
@@ -143,7 +139,7 @@ export default function Signup({ onSignup, onGoToLogin }: SignupProps) {
       <div className="text-center mt-auto">
         <p className="text-white/40 text-sm">
           Ja tem uma conta?{' '}
-          <button onClick={onGoToLogin} className="text-blue-400 font-bold hover:text-blue-300 transition-colors">
+          <button type="button" onClick={onGoToLogin} className="font-bold text-primary transition-colors hover:text-primary/85">
             Entrar
           </button>
         </p>

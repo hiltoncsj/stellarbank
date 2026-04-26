@@ -28,7 +28,7 @@ export default function Assets({ balance, currency }: AssetsProps) {
   ];
 
   return (
-    <div className="flex flex-col h-full px-6 pt-8 pb-24 overflow-y-auto no-scrollbar">
+    <div className="flex flex-col h-full px-6 pt-8 pb-24 overflow-y-auto no-scrollbar md:max-w-2xl md:mx-auto w-full">
       <header className="mb-8">
         <h1 className="text-2xl font-bold mb-2">Carteira</h1>
         <p className="text-zinc-500 text-sm">Seus ativos seguem ancorados em dolar, com leitura principal na moeda escolhida.</p>

@@ -135,14 +135,14 @@ export default function Home({ user, transactions, onAction }: HomeProps) {
   });
 
   return (
-    <div className="flex flex-col h-full pb-24 overflow-y-auto no-scrollbar">
+    <div className="flex flex-col h-full pb-24 overflow-y-auto no-scrollbar md:max-w-3xl md:mx-auto w-full">
       <header className="px-6 pt-10 pb-3 flex justify-between items-center">
         <div>
           <p className="text-zinc-400 text-sm">Ola, {user.name.split(' ')[0]}</p>
           <h1 className="text-base font-semibold text-zinc-300 capitalize">{todayLabel}</h1>
         </div>
-        <Avatar className="w-10 h-10 border-2 border-blue-400/30">
-          <AvatarFallback className="bg-blue-500/20 text-blue-300 text-xs font-bold">{initials}</AvatarFallback>
+        <Avatar className="h-10 w-10 border-2 border-indigo-400/35">
+          <AvatarFallback className="bg-indigo-500/25 text-xs font-bold text-indigo-200">{initials}</AvatarFallback>
         </Avatar>
       </header>
 
@@ -151,10 +151,14 @@ export default function Home({ user, transactions, onAction }: HomeProps) {
           initial={{ scale: 0.97, opacity: 0 }}
           animate={{ scale: 1, opacity: 1 }}
           transition={{ duration: 0.3 }}
-          className="relative overflow-hidden rounded-3xl p-6 border border-white/10 shadow-2xl"
-          style={{ background: 'linear-gradient(135deg, #1e3a5f 0%, #0f1a2e 60%, #1a1b1e 100%)' }}
+          className="relative overflow-hidden rounded-3xl border border-white/12 p-6 shadow-2xl"
+          style={{
+            background:
+              'linear-gradient(145deg, #1a1f35 0%, #12182a 45%, #0c1020 100%)',
+          }}
         >
-          <div className="absolute top-0 left-0 w-40 h-40 bg-primary/10 rounded-full blur-3xl -translate-x-1/2 -translate-y-1/2 pointer-events-none" />
+          <div className="pointer-events-none absolute -right-16 top-0 h-48 w-48 rounded-full bg-indigo-500/15 blur-3xl" />
+          <div className="pointer-events-none absolute left-0 top-0 h-40 w-40 -translate-x-1/2 -translate-y-1/2 rounded-full bg-primary/10 blur-3xl" />
 
           <div className="flex justify-between items-start mb-1">
             <p className="text-zinc-400 text-xs font-medium">Saldo disponivel</p>
@@ -171,13 +175,19 @@ export default function Home({ user, transactions, onAction }: HomeProps) {
           </h2>
 
           <p className="mt-1 text-sm text-zinc-400">
-            {showBalance ? formatCurrency(totalUsdBalance, 'USD') : '$ ......'} em dolar
+            {showBalance ? formatCurrency(totalUsdBalance, 'USD') : '$ ......'} referência em USD
+          </p>
+          <p className="mt-3 text-xs leading-relaxed text-zinc-500">
+            Seu dinheiro, suas pessoas. Transações com a clareza de um banco e a velocidade da rede.
           </p>
 
-          <div className="mt-5 flex items-center justify-between">
-            <div className="flex items-center gap-2">
-              <div className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse" />
-              <p className="text-[11px] text-zinc-400 font-medium">Rede Stellar - Testnet</p>
+          <div className="mt-5 flex items-center justify-between gap-3">
+            <div className="flex min-w-0 items-center gap-2">
+              <img src="/stellar-mark.svg" alt="Stellar" className="h-6 w-6 shrink-0 opacity-90" width={24} height={24} />
+              <div className="min-w-0">
+                <p className="text-[10px] font-bold uppercase tracking-wide text-teal-400/95">Stellar</p>
+                <p className="truncate text-[11px] font-medium text-zinc-400">Testnet · liquidação rápida</p>
+              </div>
             </div>
             <div className="flex gap-1">
               {user.assets.map((a) => (

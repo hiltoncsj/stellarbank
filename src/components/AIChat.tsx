@@ -355,24 +355,26 @@ export default function AIChat({ user, transactions, onExecuteTransaction }: AIC
     : selectedContact?.name || 'Contato';
 
   return (
-    <div className="flex h-full flex-col bg-[#f5f7fb] text-zinc-900">
-      <header className="border-b border-zinc-200 bg-white px-4 py-4">
+    <div className="flex h-full flex-col bg-app text-zinc-100 md:max-w-3xl md:mx-auto w-full">
+      <header className="border-b border-white/10 bg-app/95 px-4 py-4 backdrop-blur-md">
         <div className="flex items-center justify-between gap-3">
           <div>
-            <h1 className="text-lg font-bold">Chat</h1>
+            <h1 className="text-lg font-bold text-white">Chat</h1>
             <p className="text-xs text-zinc-500">IA no topo e sua lista de contatos logo abaixo</p>
           </div>
           <div className="flex items-center gap-2">
             <button
+              type="button"
               onClick={fetchNearbyContacts}
-              className="flex h-10 w-10 items-center justify-center rounded-2xl border border-zinc-200 bg-zinc-50 text-zinc-600"
+              className="flex h-10 w-10 items-center justify-center rounded-2xl border border-white/12 bg-white/5 text-zinc-300 hover:bg-white/10"
               title="Buscar por proximidade"
             >
               {loadingNearby ? <Loader2 size={16} className="animate-spin" /> : <MapPin size={16} />}
             </button>
             <button
+              type="button"
               onClick={() => setShowAddModal(true)}
-              className="flex h-10 w-10 items-center justify-center rounded-2xl bg-primary text-white"
+              className="flex h-10 w-10 items-center justify-center rounded-2xl bg-primary text-white shadow-lg shadow-indigo-500/20"
               title="Adicionar contato"
             >
               <Plus size={18} />
@@ -381,26 +383,27 @@ export default function AIChat({ user, transactions, onExecuteTransaction }: AIC
         </div>
       </header>
 
-      <div className="border-b border-zinc-200 bg-white px-3 py-3">
+      <div className="border-b border-white/10 px-3 py-3">
         <div className="space-y-2">
           {threads.map((thread) => {
             const isSelected = selectedThread === thread.id;
             return (
               <button
                 key={String(thread.id)}
+                type="button"
                 onClick={() => setSelectedThread(thread.id)}
                 className={cn(
                   'flex w-full items-center gap-3 rounded-2xl px-3 py-3 text-left transition-colors',
-                  isSelected ? 'bg-zinc-900 text-white' : 'bg-zinc-50 text-zinc-900 hover:bg-zinc-100'
+                  isSelected ? 'bg-white/12 text-white' : 'bg-white/5 text-zinc-300 hover:bg-white/8'
                 )}
               >
                 <Avatar className="h-11 w-11 shrink-0">
                   {thread.id === 'assistant' ? (
-                    <AvatarFallback className={cn(isSelected ? 'bg-white/15 text-white' : 'bg-primary/10 text-primary')}>
+                    <AvatarFallback className={cn(isSelected ? 'bg-white/15 text-white' : 'bg-primary/20 text-primary')}>
                       <Bot size={18} />
                     </AvatarFallback>
                   ) : (
-                    <AvatarFallback className={cn(isSelected ? 'bg-white/15 text-white' : 'bg-blue-100 text-blue-700')}>
+                    <AvatarFallback className={cn(isSelected ? 'bg-white/15 text-white' : 'bg-indigo-500/25 text-indigo-200')}>
                       {String(thread.title).slice(0, 2).toUpperCase()}
                     </AvatarFallback>
                   )}
@@ -415,10 +418,10 @@ export default function AIChat({ user, transactions, onExecuteTransaction }: AIC
         </div>
       </div>
 
-      <div className="border-b border-zinc-200 bg-white px-4 py-3">
+      <div className="border-b border-white/10 px-4 py-3">
         <div className="flex items-center justify-between gap-3">
           <div className="min-w-0">
-            <p className="truncate text-sm font-bold">{conversationTitle}</p>
+            <p className="truncate text-sm font-bold text-white">{conversationTitle}</p>
             <p className="text-xs text-zinc-500">
               {selectedThread === 'assistant' ? 'Assistente financeiro e operacional' : 'Conversa com contato'}
             </p>
@@ -426,15 +429,17 @@ export default function AIChat({ user, transactions, onExecuteTransaction }: AIC
           {selectedContact && (
             <div className="flex gap-2">
               <button
+                type="button"
                 onClick={() => openActionModal('send')}
-                className="flex items-center gap-1 rounded-full bg-zinc-900 px-3 py-2 text-xs font-bold text-white"
+                className="flex items-center gap-1 rounded-full bg-primary px-3 py-2 text-xs font-bold text-white"
               >
                 <ArrowUpRight size={14} />
                 Enviar
               </button>
               <button
+                type="button"
                 onClick={() => openActionModal('request')}
-                className="flex items-center gap-1 rounded-full bg-zinc-100 px-3 py-2 text-xs font-bold text-zinc-700"
+                className="flex items-center gap-1 rounded-full border border-white/15 bg-white/10 px-3 py-2 text-xs font-bold text-zinc-200"
               >
                 <ArrowDownLeft size={14} />
                 Receber
@@ -454,7 +459,7 @@ export default function AIChat({ user, transactions, onExecuteTransaction }: AIC
               className={cn('flex', msg.role === 'user' ? 'justify-end' : 'justify-start')}
             >
               <div className={cn('flex max-w-[88%] gap-3', msg.role === 'user' ? 'flex-row-reverse' : 'flex-row')}>
-                <Avatar className="h-8 w-8 shrink-0 border border-zinc-200">
+                <Avatar className="h-8 w-8 shrink-0 border border-white/10">
                   {msg.role === 'assistant' ? (
                     <AvatarFallback className="bg-primary text-white"><Bot size={16} /></AvatarFallback>
                   ) : (
@@ -462,8 +467,8 @@ export default function AIChat({ user, transactions, onExecuteTransaction }: AIC
                   )}
                 </Avatar>
                 <div className={cn(
-                  'rounded-2xl p-4 text-sm shadow-sm',
-                  msg.role === 'user' ? 'rounded-tr-none bg-zinc-900 text-white' : 'rounded-tl-none border border-zinc-200 bg-white text-zinc-800'
+                  'rounded-2xl p-4 text-sm',
+                  msg.role === 'user' ? 'rounded-tr-none bg-primary text-white' : 'rounded-tl-none border border-white/10 bg-white/5 text-zinc-100'
                 )}>
                   {msg.content}
                 </div>
@@ -482,11 +487,14 @@ export default function AIChat({ user, transactions, onExecuteTransaction }: AIC
               )}
             >
               {msg.role === 'system' ? (
-                <div className="rounded-full bg-zinc-200 px-3 py-1.5 text-[11px] font-bold text-zinc-600">
+                <div className="rounded-full bg-white/10 px-3 py-1.5 text-[11px] font-bold text-zinc-400">
                   {msg.content}
                 </div>
               ) : (
-                <div className={cn('max-w-[88%] rounded-2xl p-4 text-sm shadow-sm', msg.role === 'me' ? 'rounded-tr-none bg-zinc-900 text-white' : 'rounded-tl-none border border-zinc-200 bg-white text-zinc-800')}>
+                <div className={cn(
+                  'max-w-[88%] rounded-2xl p-4 text-sm',
+                  msg.role === 'me' ? 'rounded-tr-none bg-primary text-white' : 'rounded-tl-none border border-white/10 bg-white/5 text-zinc-100'
+                )}>
                   {msg.content}
                 </div>
               )}
@@ -495,9 +503,9 @@ export default function AIChat({ user, transactions, onExecuteTransaction }: AIC
 
           {isLoading && selectedThread === 'assistant' && (
             <div className="flex justify-start">
-              <div className="flex gap-3 items-center bg-white p-3 rounded-2xl border border-zinc-200 shadow-sm">
+              <div className="flex items-center gap-3 rounded-2xl border border-white/10 bg-white/5 p-3">
                 <Loader2 size={16} className="animate-spin text-primary" />
-                <span className="text-xs text-zinc-400 font-medium">Pensando...</span>
+                <span className="text-xs font-medium text-zinc-500">Pensando...</span>
               </div>
             </div>
           )}
@@ -505,11 +513,11 @@ export default function AIChat({ user, transactions, onExecuteTransaction }: AIC
         </div>
       </ScrollArea>
 
-      <div className="border-t border-zinc-200 bg-white p-4">
+      <div className="border-t border-white/10 bg-app p-4">
         <div className="relative flex items-center">
           <Input
             placeholder={selectedThread === 'assistant' ? 'Pergunte algo para a IA...' : `Mensagem para ${selectedContact?.name || 'contato'}`}
-            className="h-14 rounded-2xl border-zinc-200 bg-zinc-50 pr-12"
+            className="h-14 rounded-2xl border-white/15 bg-white/8 pr-12 text-white placeholder:text-zinc-600"
             value={input}
             onChange={(e) => setInput(e.target.value)}
             onKeyDown={(e) => e.key === 'Enter' && (selectedThread === 'assistant' ? handleAssistantSend() : handleContactMessage())}
@@ -526,21 +534,22 @@ export default function AIChat({ user, transactions, onExecuteTransaction }: AIC
       </div>
 
       {(showAddModal || showActionModal) && (
-        <div className="absolute inset-0 z-50 flex items-end bg-black/40 p-3">
-          <div className="w-full rounded-[28px] bg-white p-5 shadow-2xl">
+        <div className="absolute inset-0 z-50 flex items-end bg-black/50 p-3">
+          <div className="w-full rounded-[28px] border border-white/12 bg-[#0f1424] p-5 shadow-2xl">
             <div className="mb-4 flex items-center justify-between">
               <div>
-                <h2 className="text-lg font-bold">{showAddModal ? 'Adicionar contato' : actionMode === 'send' ? 'Enviar pelo chat' : 'Cobrar pelo chat'}</h2>
+                <h2 className="text-lg font-bold text-white">{showAddModal ? 'Adicionar contato' : actionMode === 'send' ? 'Enviar pelo chat' : 'Cobrar pelo chat'}</h2>
                 <p className="text-sm text-zinc-500">
                   {showAddModal ? 'Manual ou por proximidade' : selectedContact ? `Conversa com ${selectedContact.name}` : ''}
                 </p>
               </div>
               <button
+                type="button"
                 onClick={() => {
                   setShowAddModal(false);
                   setShowActionModal(false);
                 }}
-                className="flex h-10 w-10 items-center justify-center rounded-2xl bg-zinc-100 text-zinc-600"
+                className="flex h-10 w-10 items-center justify-center rounded-2xl bg-white/10 text-zinc-300 hover:bg-white/15"
               >
                 <X size={18} />
               </button>
@@ -550,8 +559,18 @@ export default function AIChat({ user, transactions, onExecuteTransaction }: AIC
               <div className="space-y-4">
                 <div className="space-y-2">
                   <p className="text-[11px] font-bold uppercase tracking-widest text-zinc-500">Manual</p>
-                  <Input placeholder="Nome do contato" value={newContactName} onChange={(e) => setNewContactName(e.target.value)} />
-                  <Input placeholder="Email, telefone ou chave" value={newContactIdentifier} onChange={(e) => setNewContactIdentifier(e.target.value)} />
+                  <Input
+                    placeholder="Nome do contato"
+                    value={newContactName}
+                    onChange={(e) => setNewContactName(e.target.value)}
+                    className="border-white/15 bg-white/8 text-white"
+                  />
+                  <Input
+                    placeholder="Email, telefone ou chave"
+                    value={newContactIdentifier}
+                    onChange={(e) => setNewContactIdentifier(e.target.value)}
+                    className="border-white/15 bg-white/8 text-white"
+                  />
                   <Button className="w-full" onClick={saveManualContact} disabled={savingContact}>
                     {savingContact ? 'Salvando...' : 'Salvar contato'}
                   </Button>
@@ -560,13 +579,13 @@ export default function AIChat({ user, transactions, onExecuteTransaction }: AIC
                 <div className="space-y-2">
                   <div className="flex items-center justify-between">
                     <p className="text-[11px] font-bold uppercase tracking-widest text-zinc-500">Por proximidade</p>
-                    <button onClick={fetchNearbyContacts} className="text-xs font-bold text-primary">Atualizar GPS</button>
+                    <button type="button" onClick={fetchNearbyContacts} className="text-xs font-bold text-primary">Atualizar GPS</button>
                   </div>
-                  <div className="space-y-2 max-h-48 overflow-y-auto">
+                  <div className="max-h-48 space-y-2 overflow-y-auto">
                     {nearbyContacts.map((contact) => (
-                      <div key={contact.userId} className="flex items-center justify-between rounded-2xl border border-zinc-200 bg-zinc-50 px-3 py-3">
+                      <div key={contact.userId} className="flex items-center justify-between rounded-2xl border border-white/10 bg-white/5 px-3 py-3">
                         <div>
-                          <p className="text-sm font-bold">{contact.firstName}</p>
+                          <p className="text-sm font-bold text-white">{contact.firstName}</p>
                           <p className="text-xs text-zinc-500">{contact.distanceKm.toFixed(1)} km de voce</p>
                         </div>
                         <Button size="sm" onClick={() => addNearbyContact(contact.userId)} disabled={addingNearbyUserId === contact.userId}>
@@ -575,7 +594,7 @@ export default function AIChat({ user, transactions, onExecuteTransaction }: AIC
                       </div>
                     ))}
                     {!loadingNearby && nearbyContacts.length === 0 && (
-                      <div className="rounded-2xl border border-dashed border-zinc-200 p-4 text-center text-sm text-zinc-500">
+                      <div className="rounded-2xl border border-dashed border-white/15 p-4 text-center text-sm text-zinc-500">
                         Nenhum contato proximo encontrado ainda.
                       </div>
                     )}
@@ -586,16 +605,18 @@ export default function AIChat({ user, transactions, onExecuteTransaction }: AIC
 
             {showActionModal && selectedContact && (
               <div className="space-y-4">
-                <div className="grid grid-cols-2 gap-2 rounded-2xl bg-zinc-100 p-1">
+                <div className="grid grid-cols-2 gap-2 rounded-2xl bg-white/5 p-1">
                   <button
+                    type="button"
                     onClick={() => setActionMode('send')}
-                    className={cn('rounded-xl px-3 py-2 text-sm font-bold', actionMode === 'send' ? 'bg-white text-zinc-900' : 'text-zinc-500')}
+                    className={cn('rounded-xl px-3 py-2 text-sm font-bold', actionMode === 'send' ? 'bg-white/15 text-white' : 'text-zinc-500')}
                   >
                     Enviar
                   </button>
                   <button
+                    type="button"
                     onClick={() => setActionMode('request')}
-                    className={cn('rounded-xl px-3 py-2 text-sm font-bold', actionMode === 'request' ? 'bg-white text-zinc-900' : 'text-zinc-500')}
+                    className={cn('rounded-xl px-3 py-2 text-sm font-bold', actionMode === 'request' ? 'bg-white/15 text-white' : 'text-zinc-500')}
                   >
                     Receber
                   </button>
@@ -608,6 +629,7 @@ export default function AIChat({ user, transactions, onExecuteTransaction }: AIC
                     placeholder={actionMode === 'request' ? 'Opcional' : '0.00'}
                     value={requestDraft.amount}
                     onChange={(e) => setRequestDraft((prev) => ({ ...prev, amount: e.target.value }))}
+                    className="border-white/15 bg-white/8 text-white"
                   />
                 </div>
 
@@ -616,10 +638,10 @@ export default function AIChat({ user, transactions, onExecuteTransaction }: AIC
                   <select
                     value={requestDraft.currency}
                     onChange={(e) => setRequestDraft((prev) => ({ ...prev, currency: e.target.value }))}
-                    className="w-full rounded-2xl border border-zinc-200 bg-zinc-50 px-4 py-3 text-sm outline-none"
+                    className="w-full rounded-2xl border border-white/15 bg-white/8 px-4 py-3 text-sm text-white outline-none"
                   >
                     {REQUEST_CURRENCIES.map((currency) => (
-                      <option key={currency} value={currency}>
+                      <option key={currency} value={currency} className="bg-zinc-900">
                         {currency === 'QUALQUER' ? 'Qualquer moeda' : currency}
                       </option>
                     ))}
