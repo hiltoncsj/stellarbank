@@ -15,7 +15,7 @@ import Profile from './components/Profile';
 import AIChat from './components/AIChat';
 import Login from './components/Login';
 import Signup from './components/Signup';
-import Landing from './components/Landing';
+import MarketingLayout from './components/MarketingLayout';
 import Deposit from './components/Deposit';
 import { AnimatePresence, motion } from 'motion/react';
 import { toast } from 'sonner';
@@ -194,7 +194,7 @@ export default function App() {
             className={authScreen === 'landing' ? 'min-h-screen' : 'flex min-h-screen items-center justify-center px-4 py-8'}
           >
             {authScreen === 'landing' && (
-              <Landing onLogin={() => setAuthScreen('login')} onSignup={() => setAuthScreen('signup')} />
+              <MarketingLayout onLogin={() => setAuthScreen('login')} onSignup={() => setAuthScreen('signup')} />
             )}
             {authScreen === 'login' && (
               <div className="w-full max-w-md h-screen max-h-[700px]">

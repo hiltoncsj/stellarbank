@@ -130,9 +130,13 @@ export default function Landing({ onLogin, onSignup }: LandingProps) {
       </nav>
 
       {/* ── Hero ───────────────────────────────────────────────────────── */}
-      <section className="relative mx-auto flex w-full max-w-7xl flex-col items-center gap-12 overflow-hidden px-6 py-20 md:flex-row">
-        <div className="pointer-events-none absolute -right-32 -top-32 h-96 w-96 rounded-full bg-cyan-500/10 blur-[120px]" />
-        <div className="pointer-events-none absolute -left-32 bottom-0 h-72 w-72 rounded-full bg-indigo-600/15 blur-[100px]" />
+      <section className="relative w-full py-20">
+        {/* Gradients ficam no section full-width, sem overflow-hidden */}
+        <div className="pointer-events-none absolute right-0 top-0 h-[500px] w-[500px] rounded-full bg-cyan-500/12 blur-[140px]" />
+        <div className="pointer-events-none absolute bottom-0 left-0 h-[400px] w-[400px] rounded-full bg-indigo-600/15 blur-[120px]" />
+        <div className="pointer-events-none absolute left-1/2 top-1/2 h-[600px] w-[800px] -translate-x-1/2 -translate-y-1/2 rounded-full bg-cyan-900/20 blur-[160px]" />
+
+        <div className="relative mx-auto flex w-full max-w-7xl flex-col items-center gap-12 px-6 md:flex-row">
 
         <motion.div
           className="relative z-10 md:w-1/2"
@@ -190,6 +194,7 @@ export default function Landing({ onLogin, onSignup }: LandingProps) {
             <GlobeCanvas />
           </div>
         </motion.div>
+        </div>{/* end max-w-7xl content */}
       </section>
 
       {/* ── Pague em qualquer lugar ────────────────────────────────────── */}

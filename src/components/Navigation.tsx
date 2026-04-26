@@ -25,7 +25,7 @@ export default function Navigation({ currentView, onViewChange, variant }: Navig
               <Globe className="w-5 h-5 text-primary" />
             </div>
             <div>
-              <p className="font-bold text-white text-base leading-tight">DolarPix</p>
+              <p className="font-bold text-white text-base leading-tight">Stellix</p>
               <p className="text-[10px] text-zinc-500 leading-tight">Pagamentos globais</p>
             </div>
           </div>
